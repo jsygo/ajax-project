@@ -19,6 +19,15 @@ button {
   height: 50px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
 .justify-center {
   display: flex;
   justify-content: center;
@@ -42,11 +51,7 @@ button {
   background-position: 65%;
   background-size: cover;
   background-repeat: no-repeat;
-
-  /* max-width: none; */
   height: 100vh;
-
-  /* justify-content: space-around; */
 }
 
 .start-page-inner-container {
@@ -93,23 +98,18 @@ button {
 
 .card-img {
   width: 150px;
-
-  /* position: relative; */
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-
-  /* position: absolute; */
-
-  /* top: 0;
-  left: 0; */
 }
 
-.player-hand > div:not(:last-child) {
+.player-hand > div:not(:last-child),
+.dealer-hand > div:not(:last-child) {
   width: 50px;
 }
 
 .card-container {
   display: inline-block;
 }
+
+/* media query */
 
 @media only screen and (min-width: 768px) {
   button {
@@ -133,11 +133,21 @@ button {
 
   /* player and dealer hands */
 
-  .card-img {
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  .card-img:first-child {
+    margin-right: 10px;
   }
 
-  .player-hand > div:not(:last-child) {
+  .card-img:last-child {
+    margin-left: 10px;
+  }
+
+  .card-img:not(:first-child, :last-child) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .player-hand > div:not(:last-child),
+  .dealer-hand > div:not(:last-child) {
     width: auto;
   }
 

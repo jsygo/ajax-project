@@ -10,6 +10,10 @@ var $startGameBtn = document.querySelector('.start-game-btn');
 
 var $dealCardsBtn = document.querySelector('.deal-cards-btn');
 
+var $playerHand = document.querySelector('.player-hand');
+
+var $dealerHand = document.querySelector('.dealer-hand');
+
 // global variables
 
 var drawnCards = null;
@@ -39,6 +43,12 @@ function dealCards(player, numOfCards) {
     for (var i = 0; i < drawnCards.cards.length; i++) {
       player.hand.push(drawnCards.cards[i]);
     }
+
+    if (data.dealer.hand.length === 0) {
+      dealCards(data.dealer, 2);
+    }
+
+    renderCards();
   });
 
   xhr.send();
@@ -54,7 +64,38 @@ function Player(name) {
 
 // DOM tree creation
 
+function buildCardDOMTree(cardImg) {
+
+  // <div class="card-container">
+  //   <img src="images/king-of-spades.png" class="card-img">
+  // </div>
+
+  var $cardContainer = document.createElement('div');
+  $cardContainer.setAttribute('class', 'card-container');
+
+  var $card = document.createElement('img');
+  $card.setAttribute('src', cardImg);
+  $card.setAttribute('class', 'card-img');
+
+  $cardContainer.append($card);
+
+  return $cardContainer;
+}
+
 // functions
+
+function renderCards() {
+  if (data.dealer.hand.length === 0) {
+    return;
+  }
+
+  for (var dealerHandIndex = 0; dealerHandIndex < data.dealer.hand.length; dealerHandIndex++) {
+    $dealerHand.append(buildCardDOMTree(data.dealer.hand[dealerHandIndex].image));
+  }
+  for (var playerHandIndex = 0; playerHandIndex < data.currentPlayer.hand.length; playerHandIndex++) {
+    $playerHand.append(buildCardDOMTree(data.currentPlayer.hand[playerHandIndex].image));
+  }
+}
 
 // event handlers
 
