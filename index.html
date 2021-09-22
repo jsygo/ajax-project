@@ -4,15 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-  </header>
   <main>
+    <div class="container">
+      <div class="row-half">
+        <div class="row-three-fourths center-content">
+          <div class="dealer-hand">
+            <img src="images/8-of-diamonds.png" class="card-img">
+            <img src="images/jack-of-hearts.png" class="card-img">
+          </div>
+        </div>
+        <div class="row-one-fourth center-text">
+          <p class="table-text-top col-full">Blackjack Pays 3 to 2</p>
+          <p class="table-text-bottom col-full">Dealer Stands on 17</p>
+        </div>
+      </div>
+      <div class="row-half">
+        <div class="row-three-fourths center-content">
+          <div class="player-hand">
+            <div class="card-container">
+              <img src="images/king-of-spades.png" class="card-img">
+            </div>
+            <div class="card-container">
+              <img src="images/3-of-clubs.png" class="card-img">
+            </div>
+            <img src="images/3-of-clubs.png" class="card-img">
+            <!-- <img src="images/8-of-diamonds.png" class="card-img"> -->
+          </div>
+        </div>
+        <div class="row-one-fourth align-center">
+          <button class="deal-cards">Deal Cards</button>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
