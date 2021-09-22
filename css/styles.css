@@ -19,10 +19,6 @@ button {
   height: 50px;
 }
 
-.hidden {
-  display: none;
-}
-
 .justify-center {
   display: flex;
   justify-content: center;
@@ -69,6 +65,14 @@ button {
 .start-game-btn {
   background-color: red;
   color: white;
+}
+
+.leave-game-btn {
+  background-color: red;
+  color: white;
+  height: auto;
+  width: auto;
+  padding: 0.5rem;
 }
 
 /* table text */

@@ -1,3 +1,7 @@
+.hidden {
+  display: none !important;
+}
+
 .container {
   max-width: 575px;
   height: 100vh;
