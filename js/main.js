@@ -119,6 +119,30 @@ function dealerHit(response) {
   data.dealer.hand.push(response.cards[0]);
 }
 
+function getScore(player) {
+  player.score = 0;
+
+  for (var i = 0; i < player.hand.length; i++) {
+    if (!(Number.isNaN(parseInt(player.hand[i].value)))) {
+      player.score += parseInt(player.hand[i].value);
+    } else if (player.hand[i].value !== 'ACE') {
+      player.score += 10;
+    }
+  }
+
+  for (var j = 0; j < player.hand.length; j++) {
+    if (player.hand[j].value === 'ACE') {
+      if ((player.score + 11) < 21) {
+        player.score += 11;
+      } else {
+        player.score += 1;
+      }
+    }
+  }
+
+  console.log(player.score);
+}
+
 // event handlers
 
 function startGame(event) {
