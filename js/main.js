@@ -7,11 +7,10 @@ var $startPage = document.querySelector('.start-page');
 var $gamePage = document.querySelector('.game-page');
 
 var $startGameBtn = document.querySelector('.start-game-btn');
-
 var $dealCardsBtn = document.querySelector('.deal-cards-btn');
+var $hitBtn = document.querySelector('.hit-btn');
 
 var $playerHand = document.querySelector('.player-hand');
-
 var $dealerHand = document.querySelector('.dealer-hand');
 
 // global variables
@@ -101,6 +100,12 @@ function dealAtStart(response) {
   renderCards();
 }
 
+function playerHit(response) {
+  data.currentPlayer.hand.push(response.cards[0]);
+
+  renderCards();
+}
+
 // event handlers
 
 function startGame(event) {
@@ -114,6 +119,13 @@ function startGame(event) {
 
 function dealCardsBtnClick(event) {
   drawCards(4, dealAtStart);
+
+  $dealCardsBtn.setAttribute('class', 'hidden');
+  $hitBtn.setAttribute('class', 'hit-btn');
+}
+
+function playerHitHandler(event) {
+  drawCards(1, playerHit);
 }
 
 // event listeners
@@ -121,3 +133,5 @@ function dealCardsBtnClick(event) {
 $startGameBtn.addEventListener('click', startGame);
 
 $dealCardsBtn.addEventListener('click', dealCardsBtnClick);
+
+$hitBtn.addEventListener('click', playerHitHandler);
