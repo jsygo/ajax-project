@@ -16,12 +16,10 @@ var $dealerHand = document.querySelector('.dealer-hand');
 
 // global variables
 
-var xhr;
-
 // XHR
 
 function getDecks(numOfDecks) {
-  xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
 
   xhr.open('GET', 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=' + numOfDecks);
   xhr.responseType = 'json';
@@ -33,10 +31,12 @@ function getDecks(numOfDecks) {
 }
 
 function drawCards(numOfCards, loadCallback) {
-  xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://deckofcardsapi.com/api/deck/' + data.currentDeckId + '/draw/?count=' + numOfCards);
   xhr.responseType = 'json';
-  xhr.addEventListener('load', loadCallback);
+  xhr.addEventListener('load', function () {
+    loadCallback(xhr.response);
+  });
   xhr.send();
 }
 
@@ -95,9 +95,9 @@ function removeAllChildren(node, nodeList) {
 //   player.hand = cardsArray;
 // }
 
-function dealAtStart() {
-  var playersCards = xhr.response.cards.slice(0, 2);
-  var dealersCards = xhr.response.cards.slice(2, 4);
+function dealAtStart(response) {
+  var playersCards = response.cards.slice(0, 2);
+  var dealersCards = response.cards.slice(2, 4);
 
   data.currentPlayer.hand = playersCards;
   data.dealer.hand = dealersCards;
