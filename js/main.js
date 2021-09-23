@@ -111,12 +111,33 @@ function playerHit(response) {
   renderCards();
 }
 
-function stand(response) {
+function stand() {
+  getScore(data.currentPlayer);
+  getScore(data.dealer);
 
+  if (data.dealer.score < 17) {
+    drawCards(7, dealerHit);
+  }
 }
 
 function dealerHit(response) {
-  data.dealer.hand.push(response.cards[0]);
+  var dealerHitArr = [];
+
+  dealerHitArr = response.cards;
+
+  for (var i = 0; i < dealerHitArr.length; i++) {
+    data.dealer.hand.push(response.cards[i]);
+
+    getScore(data.dealer);
+
+    if (data.dealer.score > 16) {
+      break;
+    }
+  }
+
+  renderCards();
+
+  getScore(data.dealer);
 }
 
 function getScore(player) {
@@ -168,6 +189,7 @@ function hitStandHandler(event) {
   if (event.target.matches('.stand-btn')) {
     data.whosTurn = 'dealer';
     renderCards();
+    stand();
   }
 }
 
