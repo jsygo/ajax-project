@@ -8,7 +8,7 @@ var $gamePage = document.querySelector('.game-page');
 
 var $startGameBtn = document.querySelector('.start-game-btn');
 var $dealCardsBtn = document.querySelector('.deal-cards-btn');
-var $hitBtn = document.querySelector('.hit-btn');
+var $hitStandContainer = document.querySelector('.hit-stand-container');
 
 var $playerHand = document.querySelector('.player-hand');
 var $dealerHand = document.querySelector('.dealer-hand');
@@ -121,11 +121,13 @@ function dealCardsBtnClick(event) {
   drawCards(4, dealAtStart);
 
   $dealCardsBtn.setAttribute('class', 'hidden');
-  $hitBtn.setAttribute('class', 'hit-btn');
+  $hitStandContainer.setAttribute('class', 'hit-stand-container');
 }
 
-function playerHitHandler(event) {
-  drawCards(1, playerHit);
+function hitStandHandler(event) {
+  if (event.target.matches('.hit-btn')) {
+    drawCards(1, playerHit);
+  }
 }
 
 // event listeners
@@ -134,4 +136,4 @@ $startGameBtn.addEventListener('click', startGame);
 
 $dealCardsBtn.addEventListener('click', dealCardsBtnClick);
 
-$hitBtn.addEventListener('click', playerHitHandler);
+$hitStandContainer.addEventListener('click', hitStandHandler);
