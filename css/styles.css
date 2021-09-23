@@ -8,6 +8,8 @@ p {
   margin: 0;
 }
 
+/* buttons */
+
 button {
   border: none;
   background-color: #e3e3e3;
@@ -27,6 +29,12 @@ button:active {
   transform: translateY(4px);
   box-shadow: none;
 }
+
+.hit-stand-container button:first-child {
+  margin-right: 30px;
+}
+
+/* flex */
 
 .justify-center {
   display: flex;
@@ -72,14 +80,6 @@ button:active {
   color: white;
 }
 
-.leave-game-btn {
-  background-color: red;
-  color: white;
-  height: auto;
-  width: auto;
-  padding: 0.5rem;
-}
-
 /* table text */
 
 .table-text-top {
@@ -98,6 +98,7 @@ button:active {
 
 .card-img {
   width: 150px;
+  height: 212px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -113,12 +114,18 @@ button:active {
 /* media query */
 
 @media only screen and (min-width: 768px) {
+  /* buttons */
+
   button {
     border-radius: 8px;
     font-size: 3rem;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
     width: 275px;
     height: 85px;
+  }
+
+  .hit-stand-container button:first-child {
+    margin-right: 160px;
   }
 
   /* start page */

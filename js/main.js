@@ -8,7 +8,7 @@ var $gamePage = document.querySelector('.game-page');
 
 var $startGameBtn = document.querySelector('.start-game-btn');
 var $dealCardsBtn = document.querySelector('.deal-cards-btn');
-var $hitBtn = document.querySelector('.hit-btn');
+var $hitStandContainer = document.querySelector('.hit-stand-container');
 
 var $playerHand = document.querySelector('.player-hand');
 var $dealerHand = document.querySelector('.dealer-hand');
@@ -82,6 +82,11 @@ function renderCards() {
   for (var playerHandIndex = 0; playerHandIndex < data.currentPlayer.hand.length; playerHandIndex++) {
     $playerHand.append(buildCardDOMTree(data.currentPlayer.hand[playerHandIndex].image));
   }
+
+  if (data.whosTurn === 'player') {
+    $dealerHandNodeList = document.querySelectorAll('.dealer-hand > div');
+    $dealerHandNodeList[1].firstChild.setAttribute('src', 'images/cropped-back-of-playing-card-2.png');
+  }
 }
 
 function removeAllChildren(node, nodeList) {
@@ -106,6 +111,59 @@ function playerHit(response) {
   renderCards();
 }
 
+function stand() {
+  getScore(data.currentPlayer);
+  getScore(data.dealer);
+
+  if (data.dealer.score < 17) {
+    drawCards(7, dealerHit);
+  }
+}
+
+function dealerHit(response) {
+  var i = 0;
+
+  var intervalId = setInterval(function () {
+
+    data.dealer.hand.push(response.cards[i]);
+
+    getScore(data.dealer);
+
+    renderCards();
+
+    if (data.dealer.score > 16) {
+      clearInterval(intervalId);
+    }
+
+    i++;
+  }, 1000);
+
+  getScore(data.dealer);
+}
+
+function getScore(player) {
+  player.score = 0;
+  var acesArr = [];
+
+  for (var i = 0; i < player.hand.length; i++) {
+    if (parseInt(player.hand[i].value)) {
+      player.score += parseInt(player.hand[i].value);
+    } else if (player.hand[i].value !== 'ACE') {
+      player.score += 10;
+    } else {
+      acesArr.push(player.hand[i]);
+    }
+  }
+
+  for (var j = 0; j < acesArr.length; j++) {
+    if ((player.score + 11) <= 21) {
+      player.score += 11;
+    } else {
+      player.score += 1;
+    }
+  }
+}
+
 // event handlers
 
 function startGame(event) {
@@ -121,11 +179,19 @@ function dealCardsBtnClick(event) {
   drawCards(4, dealAtStart);
 
   $dealCardsBtn.setAttribute('class', 'hidden');
-  $hitBtn.setAttribute('class', 'hit-btn');
+  $hitStandContainer.setAttribute('class', 'hit-stand-container');
 }
 
-function playerHitHandler(event) {
-  drawCards(1, playerHit);
+function hitStandHandler(event) {
+  if (event.target.matches('.hit-btn')) {
+    drawCards(1, playerHit);
+  }
+
+  if (event.target.matches('.stand-btn')) {
+    data.whosTurn = 'dealer';
+    renderCards();
+    stand();
+  }
 }
 
 // event listeners
@@ -134,4 +200,4 @@ $startGameBtn.addEventListener('click', startGame);
 
 $dealCardsBtn.addEventListener('click', dealCardsBtnClick);
 
-$hitBtn.addEventListener('click', playerHitHandler);
+$hitStandContainer.addEventListener('click', hitStandHandler);
