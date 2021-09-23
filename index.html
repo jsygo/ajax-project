@@ -4,15 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-  </header>
   <main>
+    <div class="start-page center-content" data-view="start-page">
+      <div class="start-page-inner-container">
+        <p class="start-page-heading">BLACKJACK</p>
+        <button class="start-game-btn">Start Game</button>
+      </div>
+    </div>
+    <div class="game-page container hidden" data-view="game-view">
+      <div class="row-half">
+        <div class="row-three-fourths center-content">
+          <div class="dealer-hand">
+          </div>
+        </div>
+        <div class="row-one-fourth center-text">
+          <p class="table-text-top col-full">Blackjack Pays 3 to 2</p>
+          <p class="table-text-bottom col-full">Dealer Stands on 17</p>
+        </div>
+      </div>
+      <div class="row-half">
+        <div class="row-three-fourths center-content">
+          <div class="player-hand">
+          </div>
+        </div>
+        <div class="row-one-fourth align-center">
+          <button class="deal-cards-btn">Deal Cards</button>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
