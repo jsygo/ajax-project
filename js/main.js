@@ -82,6 +82,11 @@ function renderCards() {
   for (var playerHandIndex = 0; playerHandIndex < data.currentPlayer.hand.length; playerHandIndex++) {
     $playerHand.append(buildCardDOMTree(data.currentPlayer.hand[playerHandIndex].image));
   }
+
+  if (data.whosTurn === 'player') {
+    $dealerHandNodeList = document.querySelectorAll('.dealer-hand > div');
+    $dealerHandNodeList[1].firstChild.setAttribute('src', 'images/cropped-back-of-playing-card-2.png');
+  }
 }
 
 function removeAllChildren(node, nodeList) {
@@ -106,6 +111,14 @@ function playerHit(response) {
   renderCards();
 }
 
+function stand(response) {
+
+}
+
+function dealerHit(response) {
+  data.dealer.hand.push(response.cards[0]);
+}
+
 // event handlers
 
 function startGame(event) {
@@ -127,6 +140,11 @@ function dealCardsBtnClick(event) {
 function hitStandHandler(event) {
   if (event.target.matches('.hit-btn')) {
     drawCards(1, playerHit);
+  }
+
+  if (event.target.matches('.stand-btn')) {
+    data.whosTurn = 'dealer';
+    renderCards();
   }
 }
 
