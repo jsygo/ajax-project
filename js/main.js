@@ -16,12 +16,12 @@ var $dealerHand = document.querySelector('.dealer-hand');
 
 // global variables
 
-var drawnCards = null;
+var xhr;
 
 // XHR
 
 function getDecks(numOfDecks) {
-  var xhr = new XMLHttpRequest();
+  xhr = new XMLHttpRequest();
 
   xhr.open('GET', 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=' + numOfDecks);
   xhr.responseType = 'json';
@@ -32,25 +32,11 @@ function getDecks(numOfDecks) {
   xhr.send();
 }
 
-function dealCards(player, numOfCards) {
-  var xhr = new XMLHttpRequest();
-
+function drawCards(numOfCards, loadCallback) {
+  xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://deckofcardsapi.com/api/deck/' + data.currentDeckId + '/draw/?count=' + numOfCards);
   xhr.responseType = 'json';
-  xhr.addEventListener('load', function () {
-    drawnCards = xhr.response;
-
-    for (var i = 0; i < drawnCards.cards.length; i++) {
-      player.hand.push(drawnCards.cards[i]);
-    }
-
-    if (data.dealer.hand.length === 0) {
-      dealCards(data.dealer, 2);
-    }
-
-    renderCards();
-  });
-
+  xhr.addEventListener('load', loadCallback);
   xhr.send();
 }
 
@@ -85,9 +71,11 @@ function buildCardDOMTree(cardImg) {
 // functions
 
 function renderCards() {
-  if (data.dealer.hand.length === 0) {
-    return;
-  }
+  var $dealerHandNodeList = document.querySelectorAll('.dealer-hand > div');
+  var $playerHandNodeList = document.querySelectorAll('.player-hand > div');
+
+  removeAllChildren($dealerHand, $dealerHandNodeList);
+  removeAllChildren($playerHand, $playerHandNodeList);
 
   for (var dealerHandIndex = 0; dealerHandIndex < data.dealer.hand.length; dealerHandIndex++) {
     $dealerHand.append(buildCardDOMTree(data.dealer.hand[dealerHandIndex].image));
@@ -96,6 +84,30 @@ function renderCards() {
     $playerHand.append(buildCardDOMTree(data.currentPlayer.hand[playerHandIndex].image));
   }
 }
+
+function removeAllChildren(node, nodeList) {
+  for (var i = 0; i < nodeList.length; i++) {
+    node.removeChild(nodeList[i]);
+  }
+}
+
+// function dealCards(player, cardsArray) {
+//   player.hand = cardsArray;
+// }
+
+function dealAtStart() {
+  var playersCards = xhr.response.cards.slice(0, 2);
+  var dealersCards = xhr.response.cards.slice(2, 4);
+
+  data.currentPlayer.hand = playersCards;
+  data.dealer.hand = dealersCards;
+
+  renderCards();
+}
+
+// function hit() {
+//   dealCards();
+// }
 
 // event handlers
 
@@ -109,7 +121,7 @@ function startGame(event) {
 }
 
 function dealCardsBtnClick(event) {
-  dealCards(data.currentPlayer, 2);
+  drawCards(4, dealAtStart);
 }
 
 // event listeners
