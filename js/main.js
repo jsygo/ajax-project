@@ -91,10 +91,6 @@ function removeAllChildren(node, nodeList) {
   }
 }
 
-// function dealCards(player, cardsArray) {
-//   player.hand = cardsArray;
-// }
-
 function dealAtStart(response) {
   var playersCards = response.cards.slice(0, 2);
   var dealersCards = response.cards.slice(2, 4);
@@ -104,10 +100,6 @@ function dealAtStart(response) {
 
   renderCards();
 }
-
-// function hit() {
-//   dealCards();
-// }
 
 // event handlers
 
