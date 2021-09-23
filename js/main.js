@@ -124,7 +124,7 @@ function getScore(player) {
   var acesArr = [];
 
   for (var i = 0; i < player.hand.length; i++) {
-    if (!(Number.isNaN(parseInt(player.hand[i].value)))) {
+    if (parseInt(player.hand[i].value)) {
       player.score += parseInt(player.hand[i].value);
     } else if (player.hand[i].value !== 'ACE') {
       player.score += 10;
@@ -140,8 +140,6 @@ function getScore(player) {
       player.score += 1;
     }
   }
-
-  console.log(player.score);
 }
 
 // event handlers
