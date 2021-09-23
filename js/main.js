@@ -121,21 +121,22 @@ function stand() {
 }
 
 function dealerHit(response) {
-  var dealerHitArr = [];
+  var i = 0;
 
-  dealerHitArr = response.cards;
+  var intervalId = setInterval(function () {
 
-  for (var i = 0; i < dealerHitArr.length; i++) {
     data.dealer.hand.push(response.cards[i]);
 
     getScore(data.dealer);
 
-    if (data.dealer.score > 16) {
-      break;
-    }
-  }
+    renderCards();
 
-  renderCards();
+    if (data.dealer.score > 16) {
+      clearInterval(intervalId);
+    }
+
+    i++;
+  }, 1000);
 
   getScore(data.dealer);
 }
