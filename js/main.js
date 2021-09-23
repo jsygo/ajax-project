@@ -100,6 +100,12 @@ function dealAtStart(response) {
   renderCards();
 }
 
+function playerHit(response) {
+  data.currentPlayer.hand.push(response.cards[0]);
+
+  renderCards();
+}
+
 // event handlers
 
 function startGame(event) {
@@ -118,8 +124,14 @@ function dealCardsBtnClick(event) {
   $hitBtn.setAttribute('class', 'hit-btn');
 }
 
+function playerHitHandler(event) {
+  drawCards(1, playerHit);
+}
+
 // event listeners
 
 $startGameBtn.addEventListener('click', startGame);
 
 $dealCardsBtn.addEventListener('click', dealCardsBtnClick);
+
+$hitBtn.addEventListener('click', playerHitHandler);
