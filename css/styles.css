@@ -103,6 +103,13 @@ button:active {
   text-align: center;
 }
 
+.bet-table-text {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-self: flex-start;
+}
+
 /* player and dealer hands */
 
 .card-img {
@@ -190,6 +197,11 @@ button:active {
     font-size: 2rem;
   }
 
+  .deal-cards-btn,
+  .hit-stand-container {
+    margin-bottom: 2rem;
+  }
+
   /* start page */
 
   .start-page {
@@ -202,6 +214,10 @@ button:active {
   }
 
   /* player and dealer hands */
+
+  .player-hand {
+    margin-bottom: 1rem;
+  }
 
   .card-img:first-child {
     margin-right: 10px;
@@ -231,6 +247,17 @@ button:active {
     font-size: 3rem;
   }
 
+  .bet-table-text {
+    width: fit-content;
+    flex-wrap: wrap;
+  }
+
+  .bet-table-text p {
+    width: 100%;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
   /* modal */
 
   .modal {
@@ -242,18 +269,4 @@ button:active {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-
-  /* .modal p:not(:last-child) {
-    width: 50%;
-  }
-
-  .modal p:first-child {
-    text-align: left;
-    padding-left: 1rem;
-  }
-
-  .modal p:not(:last-child, :first-child) {
-    text-align: right;
-    padding-right: 1rem;
-  } */
 }
