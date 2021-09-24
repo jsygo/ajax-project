@@ -50,6 +50,8 @@ function Player(name) {
   this.name = name;
   this.hand = [];
   this.score = 0;
+  this.balance = 1000;
+  this.previousHands = [];
 }
 
 // DOM tree creation

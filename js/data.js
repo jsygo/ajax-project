@@ -5,6 +5,6 @@ var data = {
   dealer: { hand: [], score: 0 },
   players: [],
   currentPlayer: null,
-  whosTurn: 'player'
-}
-;
+  whosTurn: 'player',
+  currentBet: 0
+};
