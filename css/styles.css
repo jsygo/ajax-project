@@ -141,7 +141,6 @@ button:active {
 
 .modal span {
   font-family: 'Monserrat', sans-serif;
-  color: black;
 }
 
 .game-outcome {
@@ -149,11 +148,15 @@ button:active {
 }
 
 .green-text {
-  color: green !important;
+  color: green;
 }
 
 .red-text {
-  color: red !important;
+  color: red;
+}
+
+.black-text {
+  color: black;
 }
 
 /* media query */

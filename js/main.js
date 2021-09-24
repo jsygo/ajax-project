@@ -189,6 +189,8 @@ function endOfGame() {
     $modalPlayerScore.setAttribute('class', 'green-text');
   } else if (data.currentPlayer.score > 21) {
     $modalPlayerScore.setAttribute('class', 'red-text');
+  } else {
+    $modalPlayerScore.setAttribute('class', 'black-text');
   }
 
   $modalDealerScore.textContent = data.dealer.score;
@@ -196,6 +198,8 @@ function endOfGame() {
     $modalDealerScore.setAttribute('class', 'green-text');
   } else if (data.dealer.score > 21) {
     $modalDealerScore.setAttribute('class', 'red-text');
+  } else {
+    $modalDealerScore.setAttribute('class', 'black-text');
   }
 
   if ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) {
