@@ -44,6 +44,8 @@ button:active {
   width: auto;
   background-color: red;
   color: white;
+  font-size: 1.25rem;
+  padding: 0.5rem 0.75rem;
 }
 
 /* flex */
@@ -138,9 +140,14 @@ button:active {
   font-size: 1.5rem;
 }
 
-/* .modal p {
-  display: block;
-} */
+.modal p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal p:first-child {
+  margin-top: 0;
+}
 
 .modal span {
   font-family: 'Monserrat', sans-serif;
@@ -177,6 +184,10 @@ button:active {
 
   .hit-stand-container button:first-child {
     margin-right: 160px;
+  }
+
+  .play-again-btn {
+    font-size: 2rem;
   }
 
   /* start page */
@@ -223,12 +234,16 @@ button:active {
   /* modal */
 
   .modal {
-    height: 180px;
-    width: 600px;
+    /* padding: 3rem 4rem; */
     font-size: 2.25rem;
   }
 
-  .modal p:not(:last-child) {
+  .modal p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* .modal p:not(:last-child) {
     width: 50%;
   }
 
@@ -240,5 +255,5 @@ button:active {
   .modal p:not(:last-child, :first-child) {
     text-align: right;
     padding-right: 1rem;
-  }
+  } */
 }
