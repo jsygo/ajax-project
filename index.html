@@ -15,13 +15,13 @@
 </head>
 <body>
   <main>
-    <div class="start-page center-content" data-view="start-page">
+    <div class="start-page center-content hidden" data-view="start-page">
       <div class="start-page-inner-container">
         <p class="start-page-heading">BLACKJACK</p>
         <button class="start-game-btn">Start Game</button>
       </div>
     </div>
-    <div class="game-page container hidden" data-view="game-view">
+    <div class="game-page container" data-view="game-view">
       <div class="row-half">
         <div class="row-three-fourths center-content">
           <div class="dealer-hand">
@@ -44,6 +44,13 @@
             <button class="stand-btn">Stand</button>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="modal-overlay center-content">
+      <div class="modal">
+        <p class="player-score">Your Hand: <span>20</span></p>
+        <p class="dealer-score">Dealer's Hand: <span>17</span></p>
+        <p class="game-outcome">You Win!</p>
       </div>
     </div>
   </main>
