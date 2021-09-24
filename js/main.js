@@ -18,6 +18,8 @@ var $modalPlayerScore = document.querySelector('.player-score span');
 var $modalDealerScore = document.querySelector('.dealer-score span');
 var $modalGameOutcome = document.querySelector('.game-outcome');
 
+var $betForm = document.querySelector('.bet-input-form');
+
 // global variables
 
 // XHR
@@ -230,6 +232,7 @@ function startGame(event) {
   getDecks(6);
   $startPage.setAttribute('class', 'start-page center-content hidden');
   $gamePage.setAttribute('class', 'game-page container');
+  $betForm.elements.amount.value = 0;
 }
 
 function dealCardsBtnClick(event) {
@@ -251,6 +254,16 @@ function hitStandHandler(event) {
   }
 }
 
+function incrementDecrementBet(event) {
+  if (((event.target.matches('.increment-bet')) || (event.target.matches('.fa-plus'))) && ((data.currentBet + 100) <= data.currentPlayer.balance)) {
+    data.currentBet += 100;
+  }
+  if (((event.target.matches('.decrement-bet')) || (event.target.matches('.fa-minus'))) && ((data.currentBet - 100) >= 0)) {
+    data.currentBet -= 100;
+  }
+  $betForm.elements.amount.value = data.currentBet;
+}
+
 // event listeners
 
 $startGameBtn.addEventListener('click', startGame);
@@ -258,3 +271,9 @@ $startGameBtn.addEventListener('click', startGame);
 $dealCardsBtn.addEventListener('click', dealCardsBtnClick);
 
 $hitStandContainer.addEventListener('click', hitStandHandler);
+
+$betForm.addEventListener('submit', function () {
+  event.preventDefault();
+});
+
+$betForm.addEventListener('click', incrementDecrementBet);
