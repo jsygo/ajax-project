@@ -13,6 +13,11 @@ var $hitStandContainer = document.querySelector('.hit-stand-container');
 var $playerHand = document.querySelector('.player-hand');
 var $dealerHand = document.querySelector('.dealer-hand');
 
+var $fullModal = document.querySelector('.modal-overlay');
+var $modalPlayerScore = document.querySelector('.player-score span');
+var $modalDealerScore = document.querySelector('.dealer-score span');
+var $modalGameOutcome = document.querySelector('.game-outcome');
+
 // global variables
 
 // XHR
@@ -109,6 +114,14 @@ function playerHit(response) {
   data.currentPlayer.hand.push(response.cards[0]);
 
   renderCards();
+
+  getScore(data.currentPlayer);
+
+  if (data.currentPlayer.score >= 21) {
+    data.whosTurn = 'dealer';
+    renderCards();
+    setTimeout(stand, 1000);
+  }
 }
 
 function stand() {
@@ -117,6 +130,8 @@ function stand() {
 
   if (data.dealer.score < 17) {
     drawCards(7, dealerHit);
+  } else {
+    setTimeout(endOfGame, 1000);
   }
 }
 
@@ -132,6 +147,8 @@ function dealerHit(response) {
     renderCards();
 
     if (data.dealer.score > 16) {
+      setTimeout(endOfGame, 1000);
+
       clearInterval(intervalId);
     }
 
@@ -161,6 +178,40 @@ function getScore(player) {
     } else {
       player.score += 1;
     }
+  }
+}
+
+function endOfGame() {
+  $fullModal.setAttribute('class', 'modal-overlay center-content');
+
+  $modalPlayerScore.textContent = data.currentPlayer.score;
+  if (data.currentPlayer.score === 21) {
+    $modalPlayerScore.setAttribute('class', 'green-text');
+  } else if (data.currentPlayer.score > 21) {
+    $modalPlayerScore.setAttribute('class', 'red-text');
+  }
+
+  $modalDealerScore.textContent = data.dealer.score;
+  if (data.dealer.score === 21) {
+    $modalDealerScore.setAttribute('class', 'green-text');
+  } else if (data.dealer.score > 21) {
+    $modalDealerScore.setAttribute('class', 'red-text');
+  }
+
+  if ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) {
+    $modalGameOutcome.textContent = 'You Win!';
+    $modalGameOutcome.setAttribute('class', 'game-outcome green-text');
+  } else if ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score > 21)) {
+    $modalGameOutcome.textContent = 'Dealer Wins';
+    $modalGameOutcome.setAttribute('class', 'game-outcome red-text');
+  } else if ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score <= 21)) {
+    $modalGameOutcome.textContent = 'Dealer Wins';
+    $modalGameOutcome.setAttribute('class', 'game-outcome red-text');
+  } else if ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score > 21)) {
+    $modalGameOutcome.textContent = 'You Win!';
+    $modalGameOutcome.setAttribute('class', 'game-outcome green-text');
+  } else {
+    $modalGameOutcome.textContent = 'It\'s a Tie';
   }
 }
 

@@ -149,11 +149,11 @@ button:active {
 }
 
 .green-text {
-  color: green;
+  color: green !important;
 }
 
 .red-text {
-  color: red;
+  color: red !important;
 }
 
 /* media query */
