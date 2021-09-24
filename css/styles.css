@@ -133,10 +133,6 @@ button:active {
   background-color: #e3e3e3;
   border-radius: 8px;
   color: #6c757d;
-
-  /* display: flex;
-  flex-wrap: wrap;
-  align-content: space-around; */
   text-align: center;
   font-weight: 700;
   font-size: 1.5rem;
