@@ -111,6 +111,54 @@ button:active {
   display: inline-block;
 }
 
+/* modal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  height: 180px;
+  width: 285px;
+  background-color: #e3e3e3;
+  border-radius: 8px;
+  color: #6c757d;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.modal p {
+  width: 100%;
+}
+
+.modal span {
+  font-family: 'Monserrat', sans-serif;
+}
+
+.game-outcome {
+  color: black;
+}
+
+.green-text {
+  color: green;
+}
+
+.red-text {
+  color: red;
+}
+
+.black-text {
+  color: black;
+}
+
 /* media query */
 
 @media only screen and (min-width: 768px) {
@@ -160,11 +208,34 @@ button:active {
   }
 
   /* table text  */
+
   .table-text-top {
     font-size: 4rem;
   }
 
   .table-text-bottom {
     font-size: 3rem;
+  }
+
+  /* modal */
+
+  .modal {
+    height: 180px;
+    width: 600px;
+    font-size: 2.25rem;
+  }
+
+  .modal p:not(:last-child) {
+    width: 50%;
+  }
+
+  .modal p:first-child {
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  .modal p:not(:last-child, :first-child) {
+    text-align: right;
+    padding-right: 1rem;
   }
 }
