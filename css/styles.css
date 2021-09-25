@@ -34,6 +34,27 @@ button:active {
   margin-right: 30px;
 }
 
+.start-game-btn {
+  background-color: red;
+  color: white;
+}
+
+.play-again-btn {
+  height: auto;
+  width: auto;
+  background-color: red;
+  color: white;
+  font-size: 1.25rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.increment-bet,
+.decrement-bet {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 /* flex */
 
 .justify-center {
@@ -41,9 +62,20 @@ button:active {
   justify-content: center;
 }
 
+.justify-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .align-center {
   display: flex;
   align-items: center;
+}
+
+.align-content-around {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 
 .center-content {
@@ -75,11 +107,6 @@ button:active {
   font-size: 3rem;
 }
 
-.start-game-btn {
-  background-color: red;
-  color: white;
-}
-
 /* table text */
 
 .table-text-top {
@@ -92,6 +119,41 @@ button:active {
 
 .center-text {
   text-align: center;
+}
+
+.bet-table-text {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-self: flex-start;
+}
+
+.bet-input {
+  width: 85%;
+  height: 60%;
+  font-size: 1.5rem;
+}
+
+.bet-input-form {
+  width: 100%;
+}
+
+.bet-input-form input {
+  height: 1.5rem;
+  max-width: 10rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #e3e3e3;
+  color: #6c757d;
+  border: none;
+  border-radius: 4px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* player and dealer hands */
@@ -122,21 +184,22 @@ button:active {
 }
 
 .modal {
-  height: 180px;
-  width: 285px;
+  padding: 1.5rem 2rem;
   background-color: #e3e3e3;
   border-radius: 8px;
   color: #6c757d;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-around;
   text-align: center;
   font-weight: 700;
   font-size: 1.5rem;
 }
 
 .modal p {
-  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal p:first-child {
+  margin-top: 0;
 }
 
 .modal span {
@@ -176,6 +239,21 @@ button:active {
     margin-right: 160px;
   }
 
+  .play-again-btn {
+    font-size: 2rem;
+  }
+
+  .deal-cards-btn,
+  .hit-stand-container {
+    margin-bottom: 2rem;
+  }
+
+  .increment-bet,
+  .decrement-bet {
+    width: 60px;
+    height: 60px;
+  }
+
   /* start page */
 
   .start-page {
@@ -188,6 +266,10 @@ button:active {
   }
 
   /* player and dealer hands */
+
+  .player-hand {
+    margin-bottom: 1rem;
+  }
 
   .card-img:first-child {
     margin-right: 10px;
@@ -217,25 +299,36 @@ button:active {
     font-size: 3rem;
   }
 
+  .bet-table-text {
+    width: fit-content;
+    flex-wrap: wrap;
+  }
+
+  .bet-table-text p {
+    width: 100%;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .bet-input {
+    font-size: 2rem;
+  }
+
+  .bet-input input {
+    height: 2rem;
+    font-size: 2rem;
+    border-radius: 8px;
+  }
+
   /* modal */
 
   .modal {
-    height: 180px;
-    width: 600px;
+    /* padding: 3rem 4rem; */
     font-size: 2.25rem;
   }
 
-  .modal p:not(:last-child) {
-    width: 50%;
-  }
-
-  .modal p:first-child {
-    text-align: left;
-    padding-left: 1rem;
-  }
-
-  .modal p:not(:last-child, :first-child) {
-    text-align: right;
-    padding-right: 1rem;
+  .modal p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 }
