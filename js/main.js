@@ -19,6 +19,10 @@ var $modalDealerScore = document.querySelector('.dealer-score span');
 var $modalGameOutcome = document.querySelector('.game-outcome');
 
 var $betForm = document.querySelector('.bet-input-form');
+var $betInput = document.querySelector('.bet-input');
+
+var $balance = document.querySelector('.balance span');
+var $currentBet = document.querySelector('.current-bet span');
 
 // global variables
 
@@ -135,7 +139,11 @@ function stand() {
   if (data.dealer.score < 17) {
     drawCards(7, dealerHit);
   } else {
-    setTimeout(endOfGame, 1000);
+    setTimeout(function () {
+      getWinner();
+      handleBets();
+      endOfGameModal();
+    }, 1000);
   }
 }
 
@@ -151,7 +159,11 @@ function dealerHit(response) {
     renderCards();
 
     if (data.dealer.score > 16) {
-      setTimeout(endOfGame, 1000);
+      setTimeout(function () {
+        getWinner();
+        handleBets();
+        endOfGameModal();
+      }, 1000);
 
       clearInterval(intervalId);
     }
@@ -185,7 +197,17 @@ function getScore(player) {
   }
 }
 
-function endOfGame() {
+function getWinner() {
+  if (((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) ||
+  ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score > 21))) {
+    data.winner = data.currentPlayer;
+  } else if (((data.currentPlayer.score < data.dealer.score) && (data.dealer.score <= 21)) ||
+  ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score > 21))) {
+    data.winner = data.dealer;
+  }
+}
+
+function endOfGameModal() {
   $fullModal.setAttribute('class', 'modal-overlay center-content');
 
   $modalPlayerScore.textContent = data.currentPlayer.score;
@@ -206,21 +228,28 @@ function endOfGame() {
     $modalDealerScore.setAttribute('class', 'black-text');
   }
 
-  if ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) {
+  if (data.winner === data.currentPlayer) {
     $modalGameOutcome.textContent = 'You Win!';
     $modalGameOutcome.setAttribute('class', 'game-outcome green-text');
-  } else if ((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score > 21)) {
+  } else if (data.winner === data.dealer) {
     $modalGameOutcome.textContent = 'Dealer Wins';
     $modalGameOutcome.setAttribute('class', 'game-outcome red-text');
-  } else if ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score <= 21)) {
-    $modalGameOutcome.textContent = 'Dealer Wins';
-    $modalGameOutcome.setAttribute('class', 'game-outcome red-text');
-  } else if ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score > 21)) {
-    $modalGameOutcome.textContent = 'You Win!';
-    $modalGameOutcome.setAttribute('class', 'game-outcome green-text');
   } else {
     $modalGameOutcome.textContent = 'It\'s a Tie';
   }
+}
+
+function handleBets() {
+  if ((data.winner === data.currentPlayer) && (data.currentPlayer.score === 21)) {
+    data.currentPlayer.balance += (data.currentBet * 2.5);
+  } else if (data.winner === data.currentPlayer) {
+    data.currentPlayer.balance += (data.currentBet * 2);
+  }
+
+  data.currentBet = 100;
+
+  $balance.textContent = data.currentPlayer.balance;
+  $currentBet.textContent = data.currentBet;
 }
 
 // event handlers
@@ -232,14 +261,20 @@ function startGame(event) {
   getDecks(6);
   $startPage.setAttribute('class', 'start-page center-content hidden');
   $gamePage.setAttribute('class', 'game-page container');
-  $betForm.elements.amount.value = 0;
+  $betForm.elements.amount.value = 100;
 }
 
 function dealCardsBtnClick(event) {
   drawCards(4, dealAtStart);
 
   $dealCardsBtn.setAttribute('class', 'hidden');
+  $betInput.setAttribute('class', 'hidden');
   $hitStandContainer.setAttribute('class', 'hit-stand-container');
+
+  data.currentPlayer.balance -= data.currentBet;
+
+  $balance.textContent = data.currentPlayer.balance;
+  $currentBet.textContent = data.currentBet;
 }
 
 function hitStandHandler(event) {

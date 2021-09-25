@@ -6,5 +6,6 @@ var data = {
   players: [],
   currentPlayer: null,
   whosTurn: 'player',
-  currentBet: 0
+  currentBet: 100,
+  winner: null
 };
