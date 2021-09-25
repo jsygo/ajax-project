@@ -17,6 +17,7 @@ var $fullModal = document.querySelector('.modal-overlay');
 var $modalPlayerScore = document.querySelector('.player-score span');
 var $modalDealerScore = document.querySelector('.dealer-score span');
 var $modalGameOutcome = document.querySelector('.game-outcome');
+var $playAgainBtn = document.querySelector('.play-again-btn');
 
 var $betForm = document.querySelector('.bet-input-form');
 var $betInput = document.querySelector('.bet-input');
@@ -57,7 +58,13 @@ function Player(name) {
   this.hand = [];
   this.score = 0;
   this.balance = 1000;
-  this.previousHands = [];
+  this.pastHands = [];
+}
+
+function PastHand(playerHand, dealerHand, bet) {
+  this.playerHand = playerHand;
+  this.dealerHand = dealerHand;
+  this.bet = bet;
 }
 
 // DOM tree creation
@@ -198,7 +205,9 @@ function getScore(player) {
 }
 
 function getWinner() {
-  if (((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) ||
+  if ((data.currentPlayer.score > 21) && (data.dealer.score > 21)) {
+    data.winner = null;
+  } else if (((data.currentPlayer.score > data.dealer.score) && (data.currentPlayer.score <= 21)) ||
   ((data.currentPlayer.score < data.dealer.score) && (data.dealer.score > 21))) {
     data.winner = data.currentPlayer;
   } else if (((data.currentPlayer.score < data.dealer.score) && (data.dealer.score <= 21)) ||
@@ -244,12 +253,11 @@ function handleBets() {
     data.currentPlayer.balance += (data.currentBet * 2.5);
   } else if (data.winner === data.currentPlayer) {
     data.currentPlayer.balance += (data.currentBet * 2);
+  } else if (data.winner === null) {
+    data.currentPlayer.balance += data.currentBet;
   }
 
-  data.currentBet = 100;
-
   $balance.textContent = data.currentPlayer.balance;
-  $currentBet.textContent = data.currentBet;
 }
 
 // event handlers
@@ -267,8 +275,8 @@ function startGame(event) {
 function dealCardsBtnClick(event) {
   drawCards(4, dealAtStart);
 
-  $dealCardsBtn.setAttribute('class', 'hidden');
-  $betInput.setAttribute('class', 'hidden');
+  $dealCardsBtn.setAttribute('class', 'deal-cards-btn hidden');
+  $betInput.setAttribute('class', 'bet-input center-content align-content-around hidden');
   $hitStandContainer.setAttribute('class', 'hit-stand-container');
 
   data.currentPlayer.balance -= data.currentBet;
@@ -299,6 +307,29 @@ function incrementDecrementBet(event) {
   $betForm.elements.amount.value = data.currentBet;
 }
 
+function playAgain(event) {
+  var lastHand = new PastHand(data.currentPlayer.hand, data.dealer.hand, data.currentBet);
+  data.currentPlayer.pastHands.push(lastHand);
+
+  data.currentBet = 100;
+  $currentBet.textContent = data.currentBet;
+  $betForm.elements.amount.value = data.currentBet;
+
+  data.currentPlayer.hand = [];
+  data.dealer.hand = [];
+  renderCards();
+
+  $fullModal.setAttribute('class', 'modal-overlay center-content hidden');
+
+  $dealCardsBtn.setAttribute('class', 'deal-cards-btn');
+  $betInput.setAttribute('class', 'bet-input center-content align-content-around');
+
+  $hitStandContainer.setAttribute('class', 'hit-stand-container hidden');
+
+  data.whosTurn = 'player';
+  data.winner = null;
+}
+
 // event listeners
 
 $startGameBtn.addEventListener('click', startGame);
@@ -312,3 +343,5 @@ $betForm.addEventListener('submit', function () {
 });
 
 $betForm.addEventListener('click', incrementDecrementBet);
+
+$playAgainBtn.addEventListener('click', playAgain);
