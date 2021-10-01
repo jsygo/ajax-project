@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  -webkit-padding-start: 0;
+  -webkit-padding-end: 0;
 }
 
 body {
