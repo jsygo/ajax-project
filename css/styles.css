@@ -57,11 +57,6 @@ button:active {
 
 /* flex */
 
-.justify-center {
-  display: flex;
-  justify-content: center;
-}
-
 .justify-evenly {
   display: flex;
   justify-content: space-evenly;
