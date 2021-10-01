@@ -32,7 +32,7 @@ var $currentBet = document.querySelector('.current-bet span');
 function getDecks(numOfDecks) {
   var xhr = new XMLHttpRequest();
 
-  xhr.open('GET', 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=' + numOfDecks);
+  xhr.open('GET', 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=' + numOfDecks);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     data.currentDeckId = xhr.response.deck_id;
@@ -43,7 +43,7 @@ function getDecks(numOfDecks) {
 
 function drawCards(numOfCards, loadCallback) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://deckofcardsapi.com/api/deck/' + data.currentDeckId + '/draw/?count=' + numOfCards);
+  xhr.open('GET', 'https://deckofcardsapi.com/api/deck/' + data.currentDeckId + '/draw/?count=' + numOfCards);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     loadCallback(xhr.response);
