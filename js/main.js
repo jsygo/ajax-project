@@ -21,6 +21,7 @@ var $playAgainBtn = document.querySelector('.play-again-btn');
 
 var $betForm = document.querySelector('.bet-input-form');
 var $betInput = document.querySelector('.bet-input');
+var $betAmount = document.querySelector('#bet-amount');
 
 var $balance = document.querySelector('.balance span');
 var $currentBet = document.querySelector('.current-bet span');
@@ -307,6 +308,10 @@ function incrementDecrementBet(event) {
   $betForm.elements.amount.value = data.currentBet;
 }
 
+function betAmountInput(event) {
+  data.currentBet = parseInt($betForm.elements.amount.value);
+}
+
 function playAgain(event) {
   var lastHand = new PastHand(data.currentPlayer.hand, data.dealer.hand, data.currentBet);
   data.currentPlayer.pastHands.push(lastHand);
@@ -345,3 +350,5 @@ $betForm.addEventListener('submit', function () {
 $betForm.addEventListener('click', incrementDecrementBet);
 
 $playAgainBtn.addEventListener('click', playAgain);
+
+$betAmount.addEventListener('input', betAmountInput);
