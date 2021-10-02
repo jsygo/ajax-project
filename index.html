@@ -31,7 +31,16 @@
     <div class="game-page container hidden" data-view="game-view">
       <div class="row-half">
         <div class="row-three-fourths center-content">
-          <div class="dealer-hand">
+          <div class="hand-container center-content">
+            <div class="loading-spinner hidden">
+              <div class="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div class="dealer-hand">
+            </div>
           </div>
         </div>
         <div class="row-one-fourth center-text">
@@ -45,7 +54,16 @@
           <p class="current-bet">Current Bet: $<span>100</span></p>
         </div>
         <div class="row-three-fourths center-content">
-          <div class="player-hand">
+          <div class="hand-container center-content">
+            <div class="loading-spinner hidden">
+              <div class="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div class="player-hand">
+            </div>
           </div>
           <div class="bet-input center-content align-content-around">
             <p>Amount to Bet</p>
@@ -65,7 +83,7 @@
         </div>
       </div>
     </div>
-    <div class="modal-overlay center-content hidden">
+    <div class="end-of-game modal-overlay center-content hidden">
       <div class="modal">
         <div class="modal-text">
           <div class="modal-scores">
@@ -75,6 +93,14 @@
           <p class="game-outcome">Dealer Wins</p>
           <button class="play-again-btn">Play Again</button>
         </div>
+      </div>
+    </div>
+    <div class="network-error modal-overlay center-content hidden">
+      <div class="modal">
+        <p>Sorry!</p>
+        <p>Due to a network error,</p>
+        <p>we are unable to play the game.</p>
+        <p>Please refresh the page and try again.</p>
       </div>
     </div>
   </main>
