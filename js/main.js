@@ -10,14 +10,17 @@ var $startGameBtn = document.querySelector('.start-game-btn');
 var $dealCardsBtn = document.querySelector('.deal-cards-btn');
 var $hitStandContainer = document.querySelector('.hit-stand-container');
 
+var $loadingSpinners = document.querySelectorAll('.loading-spinner');
 var $playerHand = document.querySelector('.player-hand');
 var $dealerHand = document.querySelector('.dealer-hand');
 
-var $fullModal = document.querySelector('.modal-overlay');
+var $endOfGameModal = document.querySelector('.end-of-game');
 var $modalPlayerScore = document.querySelector('.player-score span');
 var $modalDealerScore = document.querySelector('.dealer-score span');
 var $modalGameOutcome = document.querySelector('.game-outcome');
 var $playAgainBtn = document.querySelector('.play-again-btn');
+
+var $networkErrorModal = document.querySelector('.network-error');
 
 var $betForm = document.querySelector('.bet-input-form');
 var $betInput = document.querySelector('.bet-input');
@@ -27,6 +30,8 @@ var $balance = document.querySelector('.balance span');
 var $currentBet = document.querySelector('.current-bet span');
 
 // global variables
+
+var loadedImgCounter = 0;
 
 // XHR
 
@@ -38,7 +43,9 @@ function getDecks(numOfDecks) {
   xhr.addEventListener('load', function () {
     data.currentDeckId = xhr.response.deck_id;
   });
-
+  xhr.addEventListener('error', function () {
+    $networkErrorModal.setAttribute('class', 'network-error modal-overlay center-content');
+  });
   xhr.send();
 }
 
@@ -49,7 +56,13 @@ function drawCards(numOfCards, loadCallback) {
   xhr.addEventListener('load', function () {
     loadCallback(xhr.response);
   });
+  xhr.addEventListener('error', function () {
+    $networkErrorModal.setAttribute('class', 'network-error modal-overlay center-content');
+  });
   xhr.send();
+
+  setLoadingSpinnerDisplay('loading-spinner');
+  setHandsDisplay(' hidden');
 }
 
 // constructor functions
@@ -82,6 +95,7 @@ function buildCardDOMTree(cardImg) {
   var $card = document.createElement('img');
   $card.setAttribute('src', cardImg);
   $card.setAttribute('class', 'card-img');
+  $card.addEventListener('load', imgLoad);
 
   $cardContainer.append($card);
 
@@ -159,6 +173,8 @@ function dealerHit(response) {
   var i = 0;
 
   var intervalId = setInterval(function () {
+    setLoadingSpinnerDisplay('loading-spinner');
+    setHandsDisplay(' hidden');
 
     data.dealer.hand.push(response.cards[i]);
 
@@ -218,7 +234,7 @@ function getWinner() {
 }
 
 function endOfGameModal() {
-  $fullModal.setAttribute('class', 'modal-overlay center-content');
+  $endOfGameModal.setAttribute('class', 'end-of-game modal-overlay center-content');
 
   $modalPlayerScore.textContent = data.currentPlayer.score;
   if (data.currentPlayer.score === 21) {
@@ -261,6 +277,17 @@ function handleBets() {
   $balance.textContent = data.currentPlayer.balance;
 }
 
+function setLoadingSpinnerDisplay(classes) {
+  for (var i = 0; i < $loadingSpinners.length; i++) {
+    $loadingSpinners[i].setAttribute('class', classes);
+  }
+}
+
+function setHandsDisplay(status) {
+  $playerHand.setAttribute('class', 'player-hand' + status);
+  $dealerHand.setAttribute('class', 'dealer-hand' + status);
+}
+
 // event handlers
 
 function startGame(event) {
@@ -287,7 +314,7 @@ function dealCardsBtnClick(event) {
 }
 
 function hitStandHandler(event) {
-  if (event.target.matches('.hit-btn')) {
+  if ((event.target.matches('.hit-btn')) && data.whosTurn === 'player') {
     drawCards(1, playerHit);
   }
 
@@ -324,7 +351,7 @@ function playAgain(event) {
   data.dealer.hand = [];
   renderCards();
 
-  $fullModal.setAttribute('class', 'modal-overlay center-content hidden');
+  $endOfGameModal.setAttribute('class', 'end-of-game modal-overlay center-content hidden');
 
   $dealCardsBtn.setAttribute('class', 'deal-cards-btn');
   $betInput.setAttribute('class', 'bet-input center-content align-content-around');
@@ -333,6 +360,17 @@ function playAgain(event) {
 
   data.whosTurn = 'player';
   data.winner = null;
+}
+
+function imgLoad(event) {
+  loadedImgCounter++;
+
+  if (loadedImgCounter === (data.currentPlayer.hand.length + data.dealer.hand.length)) {
+    setHandsDisplay('');
+    setLoadingSpinnerDisplay('loading-spinner hidden');
+
+    loadedImgCounter = 0;
+  }
 }
 
 // event listeners
